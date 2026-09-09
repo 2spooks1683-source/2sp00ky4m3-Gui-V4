@@ -1,0 +1,161 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer or Players.PlayerAdded:Wait()
+local playerGui = player:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "AdminMusicPanel"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 580, 0, 420)
+mainFrame.Position = UDim2.new(0.5, -290, 0.5, -210)
+mainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+mainFrame.BorderColor3 = Color3.fromRGB(255, 69, 0)
+mainFrame.BorderSizePixel = 4
+mainFrame.Parent = screenGui
+
+local headerFrame = Instance.new("Frame")
+headerFrame.Name = "HeaderFrame"
+headerFrame.Size = UDim2.new(1, 0, 0, 60)
+headerFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+headerFrame.BorderSizePixel = 0
+headerFrame.Parent = mainFrame
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, -140, 1, 0)
+titleLabel.Position = UDim2.new(0, 70, 0, 0)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "Admin Guis / Musics"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 26
+titleLabel.Parent = headerFrame
+
+local leftImage = Instance.new("ImageLabel")
+leftImage.Size = UDim2.new(0, 50, 0, 50)
+leftImage.Position = UDim2.new(0, 10, 0, 5)
+leftImage.BackgroundTransparency = 1
+leftImage.Image = "rbxassetid://125494725096524"
+leftImage.Parent = headerFrame
+
+local rightImage = Instance.new("ImageLabel")
+rightImage.Size = UDim2.new(0, 50, 0, 50)
+rightImage.Position = UDim2.new(1, -60, 0, 5)
+rightImage.BackgroundTransparency = 1
+rightImage.Image = "rbxassetid://125494725096524"
+rightImage.Parent = headerFrame
+
+local divider = Instance.new("Frame")
+divider.Size = UDim2.new(1, 0, 0, 3)
+divider.Position = UDim2.new(0, 0, 1, 0)
+divider.BackgroundColor3 = Color3.fromRGB(255, 69, 0)
+divider.BorderSizePixel = 0
+divider.Parent = headerFrame
+
+local dragging, dragInput, dragStart, startPos
+
+local function update(input)
+	local delta = input.Position - dragStart
+	mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+headerFrame.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = mainFrame.Position
+		
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+headerFrame.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		update(input)
+	end
+end)
+
+local scrollFrame = Instance.new("ScrollingFrame")
+scrollFrame.Size = UDim2.new(1, -20, 1, -75)
+scrollFrame.Position = UDim2.new(0, 10, 0, 75)
+scrollFrame.BackgroundTransparency = 1
+scrollFrame.BorderSizePixel = 0
+scrollFrame.CanvasSize = UDim2.new(0, 0, 0, 1400)
+scrollFrame.ScrollBarThickness = 6
+scrollFrame.ScrollBarImageColor3 = Color3.fromRGB(255, 69, 0)
+scrollFrame.Parent = mainFrame
+
+local uiGrid = Instance.new("UIGridLayout")
+uiGrid.CellSize = UDim2.new(0, 85, 0, 55)
+uiGrid.CellPadding = UDim2.new(0, 8, 0, 8)
+uiGrid.SortOrder = Enum.SortOrder.LayoutOrder
+uiGrid.Parent = scrollFrame
+
+local adminButtons = {
+	"Nameless Admin", "Infinite Yield", "DarkX Executor", "OPadmin [DELETED]", "BillboardGui", "Audio Panel V2",
+	"Time Controller Gui", "Global Message Gui", "Kill Gui", "Crash Gui", "Project Ligma", "RC7"
+}
+
+local musicButtons = {
+	"Spooky Scary Skeletons Remix", "Electro sp00k", "ME ME ME! short", "Mario Exe", "1x3x5x6 Theme", "1x3x5x6 Theme 2",
+	"Gothic Zero Project", "FNAF", "Winds Of Fjords", "Wonga", "c00lkidd Allah", "Allah",
+	"k00pkidd's c00l Music", "PINGU ZONE", "Pingu Zone EARRAPE", "Biji Dalin Nasheed", "1x1x1x1 Laugh", "Golden Freedy Sound",
+	"Lvbelc5 EARRPE", "Lvbelc5", "Noel Dayı VS Eminem", "Oyun Portal Rap Song", "I. M. Meen SFX", "Shedletsky Laugh",
+	"Bilmem Ki", "I. M. Meen Theme", "Mario Exe 2", "The Great Stragtegy", "MLG", "TAKLAYA GELDİK SARP!",
+	"Wont Stop Us", "Bypassed Sound", "Bodypartz", "Better Of Alone But Different", "OOFstatic", "Spooky Dubstep",
+	"OMFG Hello", "You Get Nothing Remix", "Opening Theme 0.5", "So Epic Dubstep", "Sanic", "Gangsta Paradise Loop",
+	"Spooky Scary Skeletons OG", "Sparta Remix", "Tubers93 SFX", "k00pkidd SFX", "YOU WE BEN TROLLED", "Nyan Cat",
+	"Monster Mash", "Shiawase", "Madness", "Megalovania Undertale", "Tri Poloski", "Stadium Rave (A)",
+	"Epic Sax Guy", "Ultimate MLG", "Train honk with and circuis honk", "Lonely At The Home", "Rockfeller", "Moskau",
+	"Creepy Yoshie Theme", "Dubstep Gun", "Distraction Dance", "Roblox Classic Horror Theme", "Idk this", "SpongeBob Pirate Rap",
+	"Çağatay Akman", "Idk Turkish song", "blue2sp00ks Theme V3", "Stop Sounds", "Distort", "Reverb"
+}
+
+local function createButton(name)
+	local btn = Instance.new("TextButton")
+	btn.Name = name
+	btn.Text = name
+	btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+	btn.TextSize = 11
+	btn.Font = Enum.Font.SourceSans
+	btn.TextWrapped = true
+	btn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+	btn.BorderColor3 = Color3.fromRGB(255, 69, 0)
+	btn.BorderSizePixel = 2
+	btn.Parent = scrollFrame
+
+	btn.MouseButton1Click:Connect(function()
+		btn.BackgroundColor3 = Color3.fromRGB(255, 69, 0)
+		btn.TextColor3 = Color3.fromRGB(0, 0, 0)
+		task.wait(0.1)
+		btn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+		btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+	end)
+end
+
+for _, name in ipairs(adminButtons) do createButton(name) end
+for _, name in ipairs(musicButtons) do createButton(name) end
+
+scrollFrame:FindFirstChild("Nameless Admin").MouseButton1Click:Connect(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Nameless-admin-reworked-75477"))() end)
+scrollFrame:FindFirstChild("Infinite Yield").MouseButton1Click:Connect(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))() end)
+scrollFrame:FindFirstChild("DarkX Executor").MouseButton1Click:Connect(function() print("Its deleted skid") end)
+scrollFrame:FindFirstChild("BilloardGui").MouseButton1Click:Connect(function() local Players = game:GetService("Players") local LocalPlayer = Players.LocalPlayer local function applyBillboard(character) local head = character:WaitForChild("Head", 10) if not head or head:FindFirstChild("SpookyBillboard") then return end local bbg = Instance.new("BillboardGui") bbg.Name = "SpookyBillboard" bbg.Size = UDim2.new(0, 200, 0, 50) bbg.StudsOffset = Vector3.new(0, 2.5, 0) bbg.AlwaysOnTop = true bbg.Parent = head local tl = Instance.new("TextLabel") tl.Size = UDim2.new(1, 0, 1, 0) tl.Text = "2sp00ky4m3" tl.TextColor3 = Color3.fromRGB(255, 102, 0) tl.BackgroundTransparency = 1 tl.TextSize = 45 tl.Font = Enum.Font.SourceSansBold tl.Parent = bbg end if LocalPlayer.Character then applyBillboard(LocalPlayer.Character) end LocalPlayer.CharacterAdded:Connect(applyBillboard) end)
+scrollFrame:FindFirstChild("Audio Panel V2").MouseButton1Click:Connect(function() ??? end)
+scrollFrame:FindFirstChild("Time Controller Gui").MouseButton1Click:Connect(function() ??? end)
+scrollFrame:FindFirstChild("Kill Gui").MouseButton1Click:Connect(function() local Players = game:GetService("Players") local player = Players.LocalPlayer local playerGui = player:WaitForChild("PlayerGui") local screenGui = Instance.new("ScreenGui") screenGui.Name = "CustomKillGui" screenGui.Parent = playerGui local button = Instance.new("TextButton") button.Parent = screenGui button.AnchorPoint = Vector2.new(0, 0.5) button.Position = UDim2.new(0, 20, 0.5, 0) button.Size = UDim2.new(0, 100, 0, 60) button.Text = "Kill All" button.TextColor3 = Color3.fromRGB(255, 255, 255) button.BackgroundColor3 = Color3.fromRGB(0, 0, 0) button.BorderSizePixel = 3 button.BorderColor3 = Color3.fromRGB(255, 80, 0) button.TextScaled = true button.MouseButton1Click:Connect(function() local character = player.Character or player.CharacterAdded:Wait() if character then local humanoid = character:FindFirstChildOfClass("Humanoid") if humanoid then humanoid.Health = 0 end end end) end)
+scrollFrame:FindFirstChild("Crash Gui").MouseButton1Click:Connect(function() local Players = game:GetService("Players") local player = Players.LocalPlayer local playerGui = player:WaitForChild("PlayerGui") local screenGui = Instance.new("ScreenGui") screenGui.Name = "CrashGui" screenGui.Parent = playerGui local button = Instance.new("TextButton") button.Parent = screenGui button.AnchorPoint = Vector2.new(0, 0.5) button.Position = UDim2.new(0, 20, 0.4, 0) button.Size = UDim2.new(0, 100, 0, 60) button.Text = "Crash Server" button.TextColor3 = Color3.fromRGB(255, 255, 255) button.BackgroundColor3 = Color3.fromRGB(0, 0, 0) button.BorderSizePixel = 3 button.BorderColor3 = Color3.fromRGB(255, 80, 0) button.TextScaled = true button.MouseButton1Click:Connect(function() while true do end end) end)
+scrollFrame:FindFirstChild("Project Ligma").MouseButton1Click:Connect(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Proyecto-Ligma-43520"))() end)
+scrollFrame:FindFirstChild("RC7").MouseButton1Click:Connect(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/CoreGui/Scripts/main/RC7"))() end)
