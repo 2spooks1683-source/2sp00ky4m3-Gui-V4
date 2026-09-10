@@ -128,8 +128,8 @@ local function createButton(name)
 	local btn = Instance.new("TextButton")
 	btn.Name = name
 	btn.Text = name
-	btn.TextColor3 = Color3.fromRGB(200, 200, 200)
-	btn.TextSize = 11
+	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	btn.TextSize = 15
 	btn.Font = Enum.Font.SourceSans
 	btn.TextWrapped = true
 	btn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
@@ -142,7 +142,7 @@ local function createButton(name)
 		btn.TextColor3 = Color3.fromRGB(0, 0, 0)
 		task.wait(0.1)
 		btn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-		btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+		btn.TextColor3 = Color3.fromRGB(255, 255, 255)
 	end)
 end
 
