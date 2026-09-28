@@ -1,0 +1,182 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer or Players.PlayerAdded:Wait()
+local playerGui = player:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "SpookyGuiV4"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 560, 0, 360)
+mainFrame.Position = UDim2.new(0.5, -280, 0.5, -180)
+mainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+mainFrame.BorderColor3 = Color3.fromRGB(255, 69, 0)
+mainFrame.BorderSizePixel = 4
+mainFrame.Parent = screenGui
+
+local headerFrame = Instance.new("Frame")
+headerFrame.Name = "HeaderFrame"
+headerFrame.Size = UDim2.new(1, -210, 0, 70)
+headerFrame.Position = UDim2.new(0, 0, 0, 0)
+headerFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+headerFrame.BorderColor3 = Color3.fromRGB(255, 69, 0)
+headerFrame.BorderSizePixel = 2
+headerFrame.ZIndex = 3
+headerFrame.Parent = mainFrame
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, -10, 0, 30)
+titleLabel.Position = UDim2.new(0, 10, 0, 10)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "2sp00ky4m3 Gui V4"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.TextSize = 20
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+titleLabel.ZIndex = 4
+titleLabel.Parent = headerFrame
+
+local subTitleLabel = Instance.new("TextLabel")
+subTitleLabel.Size = UDim2.new(1, -10, 0, 25)
+subTitleLabel.Position = UDim2.new(0, 10, 0, 38)
+subTitleLabel.BackgroundTransparency = 1
+subTitleLabel.Text = "Maded By 2sp00ky_Reborn"
+subTitleLabel.TextColor3 = Color3.fromRGB(255, 215, 0)
+subTitleLabel.TextSize = 18
+subTitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+subTitleLabel.ZIndex = 4
+subTitleLabel.Parent = headerFrame
+
+local closeXButton = Instance.new("TextButton")
+closeXButton.Name = "CloseXButton"
+closeXButton.Size = UDim2.new(0, 100, 0, 70)
+closeXButton.Position = UDim2.new(1, -210, 0, 0)
+closeXButton.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+closeXButton.BorderColor3 = Color3.fromRGB(255, 69, 0)
+closeXButton.BorderSizePixel = 2
+closeXButton.Text = "X"
+closeXButton.TextColor3 = Color3.fromRGB(180, 0, 0)
+closeXButton.Font = Enum.Font.SourceSansBold
+closeXButton.TextSize = 82
+closeXButton.ZIndex = 3
+closeXButton.Parent = mainFrame
+
+local toggleButton = Instance.new("TextButton")
+toggleButton.Name = "ToggleButton"
+toggleButton.Size = UDim2.new(0, 110, 0, 70)
+toggleButton.Position = UDim2.new(mainFrame.Position.X.Scale, mainFrame.Position.X.Offset + 450, mainFrame.Position.Y.Scale, mainFrame.Position.Y.Offset)
+toggleButton.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+toggleButton.BorderColor3 = Color3.fromRGB(255, 69, 0)
+toggleButton.BorderSizePixel = 2
+toggleButton.Text = "Close"
+toggleButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+toggleButton.Font = Enum.Font.SourceSansBold
+toggleButton.TextSize = 28
+toggleButton.ZIndex = 10
+toggleButton.Parent = screenGui
+
+local bgImage = Instance.new("ImageLabel")
+bgImage.Name = "ButtonsBackgroundImage"
+bgImage.Size = UDim2.new(1, 0, 1, -70)
+bgImage.Position = UDim2.new(0, 0, 0, 70)
+bgImage.BackgroundTransparency = 1
+bgImage.Image = "rbxassetid://128430398966048"
+bgImage.ScaleType = Enum.ScaleType.Stretch
+bgImage.ZIndex = 1
+bgImage.Parent = mainFrame
+
+local function createMenuButton(name, text, position)
+	local btn = Instance.new("TextButton")
+	btn.Name = name
+	btn.Size = UDim2.new(0, 240, 0, 110)
+	btn.Position = position
+	btn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+	btn.BackgroundTransparency = 0
+	btn.BorderColor3 = Color3.fromRGB(255, 69, 0)
+	btn.BorderSizePixel = 3
+	btn.Text = text
+	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	btn.TextSize = 23
+	btn.TextWrapped = true
+	btn.ZIndex = 2
+	btn.Parent = mainFrame
+	return btn
+end
+
+local btnServerDestruction = createMenuButton("ServerDestruction", "Server\nDestruction", UDim2.new(0, 20, 0, 95))
+local btnAdminGuis = createMenuButton("AdminGuis", "Admin Guis\nMusics", UDim2.new(0, 290, 0, 95))
+local btnSettings = createMenuButton("Settings", "Settings", UDim2.new(0, 20, 0, 225))
+local btnAvatarChanges = createMenuButton("AvatarChanges", "Avatar\nChanges", UDim2.new(0, 290, 0, 225))
+
+closeXButton.MouseButton1Click:Connect(function()
+	screenGui:Destroy()
+end)
+
+local isGuiOpen = true
+
+toggleButton.MouseButton1Click:Connect(function()
+	isGuiOpen = not isGuiOpen
+	
+	if isGuiOpen then
+		mainFrame.Visible = true
+		toggleButton.Text = "Close"
+	else
+		mainFrame.Visible = false
+		toggleButton.Text = "Open"
+	end
+end)
+
+local dragging, dragInput, dragStart, startPos
+
+local function update(input)
+	local delta = input.Position - dragStart
+	local newMainPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	
+	mainFrame.Position = newMainPos
+	
+	toggleButton.Position = UDim2.new(newMainPos.X.Scale, newMainPos.X.Offset + 450, newMainPos.Y.Scale, newMainPos.Y.Offset)
+end
+
+headerFrame.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = mainFrame.Position
+		
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+headerFrame.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		update(input)
+	end
+end)
+
+btnServerDestruction.MouseButton1Click:Connect(function()
+    [Script Here]
+end)
+
+btnAdminGuis.MouseButton1Click:Connect(function()
+    [Script Here]
+end)
+
+btnSettings.MouseButton1Click:Connect(function()
+    [Script Here]
+end)
+
+btnAvatarChanges.MouseButton1Click:Connect(function()
+    [Script Here]
+end)
