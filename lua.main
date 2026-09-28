@@ -166,17 +166,17 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 btnServerDestruction.MouseButton1Click:Connect(function()
-    [Script Here]
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/2spooks1683-source/V4-PART-1/refs/heads/main/lua.main"))()
 end)
 
 btnAdminGuis.MouseButton1Click:Connect(function()
-    [Script Here]
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/2spooks1683-source/V4-PART-2/refs/heads/main/lua.main"))()
 end)
 
 btnSettings.MouseButton1Click:Connect(function()
-    [Script Here]
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/2spooks1683-source/V4-PART-3/refs/heads/main/lua.main"))()
 end)
 
 btnAvatarChanges.MouseButton1Click:Connect(function()
-    [Script Here]
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/2spooks1683-source/V4-PART-4/refs/heads/main/lua.main"))()
 end)
